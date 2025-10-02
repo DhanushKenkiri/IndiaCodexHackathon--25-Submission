@@ -1,286 +1,292 @@
-# Arduino-Cardano Hardware Integration System
-## IndiaCodex Hackathon 2025 Submission
+# Arduino ↔ Cardano: AI‑Agent Orchestrated Machine‑to‑Machine Demo
 
-🚀 **A revolutionary hardware-to-blockchain integration system that enables physical Arduino button presses to trigger real Cardano blockchain transactions.**
+This demonstration shows machine (Arduino) → AI‑agent → machine (Arduino) interaction: an AI agent interprets the intent from one Arduino, Masumi orchestrates the policy and execution, and the transaction is performed on the Cardano blockchain, with results shown on another Arduino.
 
-![Demo System](https://img.shields.io/badge/Status-Fully%20Functional-brightgreen)
-![Arduino](https://img.shields.io/badge/Arduino-Uno-blue)
-![Cardano](https://img.shields.io/badge/Cardano-Preprod%20Testnet-orange)
-![Node.js](https://img.shields.io/badge/Node.js-Microservices-green)
+- Machine (Arduino) → AI‑agent decision → Machine (Arduino)
+- AI‑agent mediated interaction becomes an on‑chain Cardano transaction
+- Masumi handles orchestration; Cardano handles settlement
 
-## 🎯 **Project Overview**
+## 🎥 Demo Videos
 
-This project demonstrates a complete **hardware-to-blockchain integration** where pressing a physical Arduino button triggers real Cardano blockchain transactions on the preprod testnet. The system features dual Arduino boards, real-time monitoring, and a complete microservices architecture.
-
-## 🎥 **Demo Videos**
-
-### 🏆 **Hackathon Day Demo**
-**Live Arduino-Cardano Integration System**
+### 🏆 Hackathon Day Demo
+Live Arduino → Cardano → LCD + Dashboard
 
 <div align="center">
   <a href="https://youtu.be/UafLTltfD5o">
     <img src="https://img.youtube.com/vi/UafLTltfD5o/maxresdefault.jpg" alt="Hackathon Demo" style="width:100%; max-width:800px;">
   </a>
-  <p><em>Click to watch: Arduino button press → Real Cardano blockchain transaction → LCD display → Live dashboard monitoring</em></p>
+  <p><em>Click to watch: button press → Cardano tx → LCD + dashboard</em></p>
 </div>
 
-**Watch on YouTube:** https://youtu.be/UafLTltfD5o
+Watch on YouTube: https://youtu.be/UafLTltfD5o
 
 ---
 
-### 🚀 **Future Vision Demo**
-**Real-World Application Showcase**
+### 🚀 Future Vision Demo
+Fun preview of real‑world usage
 
 <div align="center">
   <a href="https://youtu.be/tLkZvUDTP0s">
     <img src="https://img.youtube.com/vi/tLkZvUDTP0s/maxresdefault.jpg" alt="Future Vision Demo" style="width:100%; max-width:800px;">
   </a>
-  <p><em>Click to watch: A fun representation showcasing how this technology will be used in real-world scenarios</em></p>
+  <p><em>Click to watch: how this tech fits real scenarios</em></p>
 </div>
 
-**Watch on YouTube:** https://youtu.be/tLkZvUDTP0s
+Watch on YouTube: https://youtu.be/tLkZvUDTP0s
 
 ---
 
-## 🏗️ **System Architecture**
+## 🧩 What this demonstrates
 
+- AI‑agent powered M2M flow
+  - Arduino (button/sensor) requests a payment/interaction
+  - AI agent (Gemini/Sokosumi) interprets and authorizes intent
+  - Masumi orchestrates policy, limits, routing, and execution
+  - Cardano Integration builds/signs/submits the on‑chain transaction
+  - Arduino (LCD) shows live status (Pending → Confirmed)
+- Tangible blockchain feedback on 16×2 I2C LCD
+- End‑to‑end microservices from serial to blockchain
+
+## 🏗️ Architecture (overview)
+
+```mermaid
+flowchart LR
+    A[Arduino #1 Trigger] -->|Serial| B[Arduino Bridge]
+    B -->|HTTP| C[Masumi Orchestrator]
+    C -. AI policy .- D[AI Agent]
+    C -->|HTTP| E[Cardano Integration]
+    E -->|Blockfrost| F[(Cardano Network)]
+    C -->|WebSockets| G[Web Dashboard]
+    C --> H[Arduino #2 LCD]
 ```
-Arduino Button → Arduino Bridge → Masumi Payment → Cardano Integration → Blockchain
-     ↓               ↓                ↓                     ↓                ↓
-Physical Input   Serial COM      REST API           Blockfrost API    Real Transaction
-     ↓               ↓                ↓                     ↓                ↓
-LCD Display ← Transaction Display ← Socket.IO ← Real-time Dashboard ← Live Monitoring
+
+### Sequence (button press → confirmation)
+
+```mermaid
+sequenceDiagram
+    participant A as Arduino_1_Trigger
+    participant B as Arduino_Bridge
+    participant M as Masumi_Orchestrator
+    participant AI as AI_Agent
+    participant C as Cardano_Integration
+    participant L as Arduino_2_LCD
+    participant CH as Cardano_Chain
+
+    A->>B: Serial PAY {to, amount}
+    B->>M: POST /api/cardano/transfer
+    M->>AI: Decide(policy, limits, context)
+    AI-->>M: Approve / Deny + rationale
+    M->>C: POST /transfer {from, to, amount}
+    C->>CH: Submit tx
+    CH-->>C: txHash
+    C-->>M: txHash
+    M-->>L: show txHash (Pending)
+    M-->>G: ws transaction:new (Pending)
+    CH-->>M: confirmation
+    M-->>L: update (Confirmed)
+    M-->>G: ws transaction:update (Confirmed)
 ```
 
-## 🔧 **Hardware Components**
+## 🔩 Hardware
 
-### Arduino #1 - Payment Trigger (COM6)
-- **Button**: Pin 2 (with pull-up resistor)
-- **LEDs**: 
-  - Pin 13: Success indicator
-  - Pin 12: Processing indicator  
-  - Pin 11: Error indicator
-- **Function**: Triggers payment commands via serial
+- Arduino #1 — Payment Trigger (COM6)
+  - Button: D2 (pull‑up)
+  - LEDs: 13=success, 12=processing, 11=error
+- Arduino #2 — Transaction Display (COM3)
+  - I2C LCD: SDA=A4, SCL=A5 (Uno)
 
-### Arduino #2 - Transaction Display (COM3)
-- **LCD I2C Display**: A4 (SDA), A5 (SCL)
-- **Function**: Shows transaction hashes and status messages
+Optional:
+- Soil moisture sensor (A0) + AI plant‑health analysis
 
-## 💻 **Software Stack**
+## 🖥️ Services (folders)
 
-### **Microservices Architecture**
-- **Arduino Bridge** (Port 5001): Serial communication gateway
-- **Masumi Payment** (Port 3001): Payment orchestration service
-- **Cardano Integration** (Port 4002): Blockchain transaction service
-- **AI Agents** (Port 6001): Decision engine service
-- **Web Dashboard** (Port 8090): Real-time monitoring interface
+- backend/arduino-bridge — Serial ↔ HTTP gateway (Port 5001)
+- backend/masumi-services — Orchestration & policy (Port 3001)
+- backend/cardano-integration — Build/sign/submit Cardano tx (Port 4002)
+- backend/gemini-emotion-agent, backend/sokosumi-agent — AI decision services
+- frontend/web-dashboard — Live tx and telemetry (Port 8090)
+- keys/ — Preprod addresses, CBOR, wallet info
+- scripts/ — Wallet generation and helpers
 
-### **Technologies**
-- **Backend**: Node.js, Express, Socket.IO
-- **Database**: PostgreSQL, Redis
-- **Blockchain**: Cardano Preprod Testnet via Blockfrost API
-- **Hardware**: Arduino Uno, I2C LCD, Serial Communication
-- **Containerization**: Docker Compose
-- **Real-time**: WebSockets for live monitoring
+---
 
-## 🚀 **Key Features**
+## ⚙️ Setup A: Local (Windows)
 
-### ✅ **Physical Hardware Integration**
-- Real Arduino button triggers blockchain transactions
-- LCD display shows transaction hashes in real-time
-- LED indicators for transaction status
-
-### ✅ **Real-time Monitoring**
-- Live web dashboard showing serial communication
-- Transaction status tracking
-- Wallet balance monitoring
-
-### ✅ **Blockchain Integration**
-- Real Cardano preprod testnet transactions
-- Proper wallet generation and signing
-- UTxO management and transaction building
-
-### ✅ **Microservices Architecture**
-- Scalable Docker-based services
-- Health monitoring and auto-restart
-- Service discovery and communication
-
-## 📱 **Live Demo Flow**
-
-1. **Press Arduino Button** → Physical button press detected
-2. **Serial Communication** → Commands sent via COM6
-3. **Payment Processing** → Arduino Bridge forwards to payment service
-4. **Blockchain Transaction** → Real Cardano transaction created
-5. **Real-time Display** → Transaction hash shown on LCD and dashboard
-6. **Confirmation** → LEDs indicate success/failure
-
-## 🔧 **Quick Setup**
-
-### Prerequisites
-- Arduino IDE
-- Docker Desktop
+Prerequisites:
 - Node.js 18+
-- Python (for wallet generation)
-- Blockfrost Preprod API key
+- Arduino IDE
+- Blockfrost preprod API key (for Cardano Integration)
+- Two COM ports (e.g., COM6 for trigger, COM3 for LCD)
 
-### Hardware Setup
-```bash
-# Arduino #1 (Payment Trigger) - Connect to COM6
-Button: Pin 2 → GND (with pull-up resistor)
-Success LED: Pin 13 → 220Ω resistor → LED → GND
-Processing LED: Pin 12 → 220Ω resistor → LED → GND
-Error LED: Pin 11 → 220Ω resistor → LED → GND
-
-# Arduino #2 (Transaction Display) - Connect to COM3
-LCD I2C: SDA → A4, SCL → A5, VCC → 5V, GND → GND
+1) Install service dependencies
+```powershell
+cd backend\masumi-services; npm install
+cd ..\arduino-bridge; npm install
+cd ..\cardano-integration; npm install
+cd ..\gemini-emotion-agent; npm install
 ```
 
-### Software Setup
-```bash
-# 1. Clone the repository
-git clone https://github.com/DhanushKenkiri/IndiaCodexHackathon--25-Submission.git
-cd IndiaCodexHackathon--25-Submission
+2) Configure environments
+```powershell
+copy backend\arduino-bridge\.env.example backend\arduino-bridge\.env
+copy backend\masumi-services\.env.example backend\masumi-services\.env
+copy backend\cardano-integration\.env.example backend\cardano-integration\.env
+```
 
-# 2. Configure environment
-# Edit 'env' file with your Blockfrost key and settings
-cp env.example env
+Minimum Arduino Bridge settings:
+```
+SERIAL_PORT=COM6
+BAUD_RATE=9600
+MASUMI_PAYMENT_URL=http://localhost:3001/api/cardano/transfer
+```
 
-# 3. Generate Cardano wallet
-python scripts/create_lucid_wallet.py
+3) Generate a Cardano preprod wallet
+```powershell
+cd scripts
+.\generate-cardano-preprod-wallet.ps1
+```
 
-# 4. Fund wallet at Cardano faucet
-# Visit: https://testnets.cardano.org/en/testnets/cardano/tools/faucet/
-# Use address from: keys/new-wallet/address.txt
+4) Start services (in separate terminals)
+```powershell
+cd backend\masumi-services; npm start
+cd ..\arduino-bridge; npm start
+cd ..\cardano-integration; npm start
+cd ..\gemini-emotion-agent; npm start
+```
 
-# 5. Start Docker services
-docker compose up -d --build
+5) Upload Arduino sketches
+- COM6: hardware/arduino-uno/payment_trigger.ino
+- COM3: hardware/arduino-uno/transaction_display.ino
 
-# 6. Upload Arduino code
-# Upload hardware/arduino-uno/payment_trigger.ino → Arduino #1 (COM6)
-# Upload hardware/arduino-uno/transaction_display.ino → Arduino #2 (COM3)
-
-# 7. Start web dashboard
-cd frontend/web-dashboard
-npm ci
+6) Run dashboard
+```powershell
+cd frontend\web-dashboard
+npm install
 npm start
-# Dashboard available at: http://localhost:8090
+```
+Open http://localhost:8090
 
-# 8. Test the system
-# Press the Arduino button and watch the magic happen!
+---
+
+## 🐳 Setup B: Docker (Compose)
+
+Prerequisites:
+- Docker Desktop (Windows)
+
+Note: Accessing Windows COM ports from Docker is limited. Recommended: run arduino-bridge locally and containerize the rest.
+
+1) Create docker-compose.yml (repo root)
+```yaml
+version: "3.9"
+services:
+  masumi-services:
+    build: ./backend/masumi-services
+    ports: ["3001:3001"]
+    env_file:
+      - ./backend/masumi-services/.env
+
+  cardano-integration:
+    build: ./backend/cardano-integration
+    ports: ["4002:4002"]
+    env_file:
+      - ./backend/cardano-integration/.env
+    depends_on: [masumi-services]
+
+  gemini-emotion-agent:
+    build: ./backend/gemini-emotion-agent
+    ports: ["6001:6001"]
+
+  web-dashboard:
+    build: ./frontend/web-dashboard
+    ports: ["8090:8090"]
+    depends_on: [masumi-services, cardano-integration]
+
+  # Recommended: run arduino-bridge locally on Windows for COM access
+  # On Linux, you could map serial devices like below:
+  # arduino-bridge:
+  #   build: ./backend/arduino-bridge
+  #   ports: ["5001:5001"]
+  #   env_file:
+  #     - ./backend/arduino-bridge/.env
+  #   devices:
+  #     - "/dev/ttyUSB0:/dev/ttyUSB0"
+  #     - "/dev/ttyUSB1:/dev/ttyUSB1"
+  #   group_add:
+  #     - dialout
+  #   depends_on: [masumi-services]
 ```
 
-## 🏆 **Innovation Highlights**
-
-### 🌟 **Hardware-Blockchain Bridge**
-First-of-its-kind direct integration between physical Arduino hardware and Cardano blockchain
-
-### 🌟 **Real-time Monitoring**
-Live dashboard showing every step from button press to blockchain confirmation
-
-### 🌟 **Dual Arduino Architecture**
-Separate boards for input (trigger) and output (display) with coordinated communication
-
-### 🌟 **Production-Ready Code**
-Complete microservices architecture with proper error handling and monitoring
-
-## 📊 **Technical Achievements**
-
-- ✅ **Real Blockchain Transactions**: Not simulated - actual Cardano preprod transactions
-- ✅ **Multi-COM Port Management**: Simultaneous communication with two Arduino boards  
-- ✅ **Real-time Communication**: WebSocket-based live monitoring
-- ✅ **Containerized Deployment**: Full Docker Compose stack
-- ✅ **Wallet Integration**: Proper Cardano wallet generation and signing
-
-## 🔐 **Security Features**
-
-- Environment-based key management
-- Testnet-only operations (no mainnet risk)
-- Proper CBOR key formatting
-- Health check monitoring
-- Admin token protection for sensitive endpoints
-
-## 📡 **API Endpoints**
-
-### Arduino Bridge Service (Port 5001)
-- `GET /status` - Service health check
-- `POST /trigger` - Manual payment trigger
-- WebSocket events for real-time communication
-
-### Masumi Payment Service (Port 3001)
-- `POST /payments` - Create payment
-- `GET /payments` - List transactions
-- `GET /balance` - Check wallet balance
-
-### Cardano Integration Service (Port 4002)
-- `POST /transfer` - Execute blockchain transaction
-- `GET /utxos` - Query UTxOs
-- `GET /balance` - Get wallet balance
-
-## 📈 **Future Roadmap**
-
-- **IoT Integration**: Expand to ESP32/IoT devices
-- **Multi-blockchain**: Support for other blockchain networks
-- **Mobile App**: Remote monitoring and control
-- **Smart Contracts**: Integration with Cardano smart contracts
-- **Mainnet Support**: Production deployment considerations
-
-## 🛠️ **Troubleshooting**
-
-### Common Issues
-1. **COM Port Issues**: Ensure Arduino boards are connected to correct ports (COM6 & COM3)
-2. **Docker Issues**: Make sure Docker Desktop is running
-3. **Wallet Issues**: Ensure wallet is funded via Cardano testnet faucet
-4. **Serial Communication**: Check Arduino IDE Serial Monitor for debugging
-
-### Debugging Commands
-```bash
-# Check Docker services
+2) Build and start
+```powershell
+docker compose up -d --build
 docker compose ps
-
-# View service logs
-docker compose logs arduino-bridge
-docker compose logs masumi-payment
-
-# Check Arduino connectivity
-# Use Arduino IDE Serial Monitor on COM6 and COM3
 ```
 
-## 👥 **Team & Development**
+3) Start arduino-bridge locally (recommended on Windows)
+```powershell
+cd backend\arduino-bridge
+npm start
+```
 
-- **Hardware Integration**: Arduino programming and circuit design
-- **Blockchain Development**: Cardano integration and wallet management  
-- **Full-Stack Development**: Microservices architecture and real-time dashboard
-- **DevOps**: Docker containerization and deployment
+4) Upload Arduino sketches (outside Docker)
+- COM6: hardware/arduino-uno/payment_trigger.ino
+- COM3: hardware/arduino-uno/transaction_display.ino
 
-## 📞 **Contact & Support**
-
-For questions about this IndiaCodex Hackathon 2025 submission:
-- **GitHub**: [DhanushKenkiri](https://github.com/DhanushKenkiri)
-- **Repository**: https://github.com/DhanushKenkiri/IndiaCodexHackathon--25-Submission
-- **Documentation**: See `docs/` folder for detailed guides
-
-## 📚 **Additional Documentation**
-
-- `docs/setup-guide.md` - Detailed setup instructions
-- `docs/api-documentation.md` - Complete API reference
-- `docs/hardware-wiring.md` - Hardware connection diagrams
-- `TASKS.md` - Development task tracking
+5) Open the dashboard
+- http://localhost:8090
 
 ---
 
-**🎯 This project demonstrates the future of hardware-blockchain integration, making blockchain technology tangible and accessible through physical interfaces.**
+## 🧭 Component Map
 
----
+```mermaid
+graph LR
+    subgraph Hardware
+      A1[Arduino #1 Trigger]
+      A2[Arduino #2 LCD]
+    end
+    subgraph Backend
+      B1[arduino-bridge]
+      B2[masumi-services]
+      B3[cardano-integration]
+      B4[gemini-emotion-agent]
+      B5[sokosumi-agent]
+    end
+    subgraph Frontend
+      F1[web-dashboard]
+    end
+    A1-->B1
+    B1-->B2
+    B2-->B4
+    B2-->B3
+    B2-->F1
+    B2-->A2
+    B3-->C1[(Cardano Preprod)]
+```
 
-## 🏅 **Hackathon Submission Summary**
+## ✅ Quick Test
 
-This Arduino-Cardano integration system represents a breakthrough in making blockchain technology accessible through physical interfaces. By enabling real Arduino button presses to trigger actual Cardano blockchain transactions, we've created a tangible bridge between the physical and digital worlds.
+- Trigger (manual):
+```powershell
+curl -X POST http://localhost:5001/trigger
+```
 
-**Key achievements:**
-- ✅ Fully functional hardware-to-blockchain integration
-- ✅ Real Cardano preprod testnet transactions
-- ✅ Complete microservices architecture
-- ✅ Real-time monitoring and display
-- ✅ Production-ready code with proper security
+- Check services:
+```powershell
+curl http://localhost:3001/health
+curl http://localhost:4002/health
+```
 
-**Demo the future of blockchain interaction - where pressing a button is all it takes to execute a blockchain transaction!** 🚀
+## 🔌 Troubleshooting
+
+- LCD blank: see docs/LCD_TROUBLESHOOTING.md and docs/LCD_WIRING_FIX.md
+- No transaction: verify MASUMI_PAYMENT_URL, Blockfrost/API keys, and wallet funds (preprod)
+- COM ports: set SERIAL_PORT to your actual COM6/COM3 values
+- Docker + Serial (Windows): run arduino-bridge locally for COM access
+
+## 📚 More Docs
+
+- /deployment-status.md
+- /sokosumi-integration-status.md
+
+For license information, go back to the repository folder and see the LICENSE file.
