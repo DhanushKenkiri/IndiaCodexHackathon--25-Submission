@@ -338,7 +338,7 @@ All third-party components are used in compliance with their respective licenses
 
 We sincerely thank the IndiaCodex Hackathon 2025 organizers and judges for this incredible opportunity to showcase innovation at the intersection of blockchain technology and sustainable agriculture. Special appreciation to the Cardano community for their excellent documentation and testnet infrastructure, the Arduino community for robust hardware libraries, Anthropic for Claude and MCP framework, and all open-source contributors whose libraries and tools made this project possible. This hackathon has been an inspiring journey in pushing the boundaries of what's possible when cutting-edge technology meets real-world agricultural challenges.
 
-**Team**: Masumi Cardano Hardware Implementation  
+**Team**: ActuAlte Robotics  
 **Repository**: [IndiaCodexHackathon--25-Submission](https://github.com/DhanushKenkiri/IndiaCodexHackathon--25-Submission)  
 **Default Branch**: hackathon-submission  
 **License**: MIT
