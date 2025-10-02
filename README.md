@@ -289,8 +289,6 @@ curl http://localhost:4002/health
 - /deployment-status.md
 - /sokosumi-integration-status.md
 
-For license information, go back to the repository folder and see the LICENSE file.
-
 ## 📜 License & Attributions
 
 This project is licensed under the **MIT License**.
