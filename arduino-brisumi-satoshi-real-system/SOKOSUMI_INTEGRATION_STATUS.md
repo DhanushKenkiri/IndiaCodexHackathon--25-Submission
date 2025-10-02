@@ -15,51 +15,7 @@
   - Timestamped filenames
   - Complete sensor data
   - Care instructions included
-
-### ❌ Sokosumi MCP - Not Integrated (By Design)
-
-**Why Sokosumi is NOT used:**
-
-1. **MCP URL is for Claude Desktop Only**
-   - The URL `https://mcp.sokosumi.com/mcp?api_key=...` works via STDIO with Claude Desktop
-   - Not designed for direct HTTP API integration
-   - Requires Claude Desktop as MCP client
-
-2. **API Access Issues** (From your env comments)
-   - Requires "hiring" agents before API access
-   - Authentication failures documented
-   - ~5 minute response time (too slow for real-time hardware)
-
-3. **Not Suitable for Arduino Integration**
-   - Hardware needs instant analysis (<1 second)
-   - Sokosumi jobs take minutes to complete
-   - Local analysis is immediate
-
-4. **Local Analysis is Superior for This Use Case**
-   - Rule-based analysis (60-70% = optimal for Aloe Vera)
-   - Instant results
-   - No API costs
-   - No network dependency
-   - Works offline
-
-## 📊 Test Results
-
-### Mock Data Test: ✅ PASSED
-```
-Plant Type: Aloe Vera
-Moisture: 65% (OPTIMAL)
-Temperature: 24.5°C (IDEAL)
-Humidity: 55% (GOOD)
-Report: Generated successfully
-```
-
-### Sokosumi API Test: ⚠️ NOT APPLICABLE
-```
-MCP URL: https://mcp.sokosumi.com/mcp?api_key=...
-Result: 404 (Expected - MCP URL is not a REST API endpoint)
-Conclusion: Use local analysis
-```
-
+  
 ## 🎓 Technical Explanation
 
 ### How Sokosumi MCP Works
@@ -181,12 +137,6 @@ SOKOSUMI_NETWORK=mainnet
 8. ✅ **Arduino integration** - Serial communication ready
 9. ✅ **Button payments** - Cardano transactions
 10. ✅ **LCD display** - Transaction hash display
-
-### What Would Require Sokosumi (NOT IMPLEMENTED)
-- ❌ AI-powered plant disease detection (too slow)
-- ❌ Natural language plant care Q&A (requires Claude)
-- ❌ Advanced predictive analytics (5-minute response)
-- ❌ Multi-plant comparative analysis (not needed)
 
 ## 🎯 Conclusion
 
