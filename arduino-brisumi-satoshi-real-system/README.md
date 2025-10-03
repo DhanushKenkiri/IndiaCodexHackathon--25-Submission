@@ -1,4 +1,4 @@
-# Arduino ↔ Masumi ↔ Cardano: AI‑Agent Orchestrated Machine‑to‑Machine Demo
+# Arduino ↔ Masumi ↔ Cardano: AI‑Agent Orchestrated Machine‑to‑Machine Demonstration
 ## IndiaCodex Hackathon 2025 Submission
 
 🚀 **A revolutionary hardware-to-blockchain integration where AI agents mediate machine-to-machine interactions on the Cardano blockchain**
