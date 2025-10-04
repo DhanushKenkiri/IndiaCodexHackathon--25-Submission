@@ -1,4 +1,4 @@
-# Arduino ↔ Masumi ↔ Cardano: AI‑Agent Orchestrated Machine‑to‑Machine Demonstration
+# Arduino ↔ Cardano ↔ Masumi: AI‑Agent Orchestrated Machine‑to‑Machine Demonstration
 ## IndiaCodex Hackathon 2025 Submission
 
 🚀 **A revolutionary hardware-to-blockchain integration where AI agents mediate machine-to-machine interactions on the Cardano blockchain**
@@ -65,6 +65,54 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 **Watch on YouTube:** https://youtu.be/tLkZvUDTP0s
 
 ---
+
+## 📸 **Project Screenshots**
+
+### **Complete System Overview**
+
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1BDVJGHzFZWqimj3KuV1HbodtRAFGWyk4" alt="System Overview" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
+  <p><em>Arduino-Cardano Integration System: Hardware setup, LCD display, and real-time dashboard</em></p>
+</div>
+
+---
+
+### **Hardware Setup - Arduino Boards**
+
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1YtMf4oPLX4VHHuJfRtKYro36MLVvvvq_" alt="Arduino Hardware Setup" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
+  <p><em>Dual Arduino setup: Payment Trigger (COM6) with button and LEDs, Transaction Display (COM3) with I2C LCD</em></p>
+</div>
+
+---
+
+### **Service Architecture & Logs**
+
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1J1jd_5VxPELdMUzlugkrpTOIeYaZmpGr" alt="Service Logs" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
+  <p><em>Microservices architecture with Arduino Bridge, Masumi Payment, and Cardano Integration services</em></p>
+</div>
+
+---
+
+### **Circuit Diagram - Arduino #1 (Payment Trigger)**
+
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1s5N51p9zNIP_q9-a6cMY5c-KWGZVbqZo" alt="Arduino 1 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
+  <p><em>Arduino Uno #1 wiring: Button on Pin 2, Success LED on Pin 13, Processing LED on Pin 12, Error LED on Pin 11</em></p>
+</div>
+
+---
+
+### **Circuit Diagram - Arduino #2 (Transaction Display)**
+
+<div align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1KNsAUj8ue2ZTeX40YxcxSmLz4KpgqM8e" alt="Arduino 2 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
+  <p><em>Arduino Uno #2 wiring: 16x2 I2C LCD connected to SDA (A4) and SCL (A5) pins</em></p>
+</div>
+
+---
+
 
 ## 🧩 **What This Demonstrates**
 
