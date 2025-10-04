@@ -99,7 +99,7 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 
 <div align="center">
   <img src="https://drive.google.com/uc?export=view&id=1s5N51p9zNIP_q9-a6cMY5c-KWGZVbqZo" alt="Arduino 1 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
-  <p><em>Arduino Uno #1 wiring: Button on Pin 2, Success LED on Pin 13, Processing LED on Pin 12, Error LED on Pin 11</em></p>
+  <p><em>Arduino Uno #1 wiring: Button on Pin 2</em></p>
 </div>
 
 ---
@@ -108,11 +108,10 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 
 <div align="center">
   <img src="https://drive.google.com/uc?export=view&id=1KNsAUj8ue2ZTeX40YxcxSmLz4KpgqM8e" alt="Arduino 2 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
-  <p><em>Arduino Uno #2 wiring: 16x2 I2C LCD connected to SDA (A4) and SCL (A5) pins</em></p>
+  <p><em>Arduino Uno #2 wiring: 16x2 I2C LCD connected to SDA (A4) and SCL (A5), Success LED on Pin 13, Processing LED on Pin 12, Error LED on Pin 11 pins</em></p>
 </div>
 
 ---
-
 
 ## 🧩 **What This Demonstrates**
 
