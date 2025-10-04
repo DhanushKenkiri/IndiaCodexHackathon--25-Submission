@@ -95,7 +95,7 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 
 ---
 
-### **Circuit Diagram - Arduino #1 (Payment Trigger)**
+### **Circuit Diagram - Arduino #1 (Transaction Display)**
 
 <div align="center">
   <img src="https://drive.google.com/uc?export=view&id=1s5N51p9zNIP_q9-a6cMY5c-KWGZVbqZo" alt="Arduino 1 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
@@ -104,7 +104,7 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 
 ---
 
-### **Circuit Diagram - Arduino #2 (Transaction Display)**
+### **Circuit Diagram - Arduino #2 (Payment Trigger)**
 
 <div align="center">
   <img src="https://drive.google.com/uc?export=view&id=1KNsAUj8ue2ZTeX40YxcxSmLz4KpgqM8e" alt="Arduino 2 Circuit Diagram" style="width:100%; max-width:900px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0;">
@@ -112,6 +112,7 @@ This project demonstrates **AI-agent orchestrated machine-to-machine interaction
 </div>
 
 ---
+
 
 
 ## 🧩 **What This Demonstrates**
